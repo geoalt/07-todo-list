@@ -1,7 +1,9 @@
 const newTaskInput = document.querySelector('#texto-tarefa');
 const newTaskButton = document.querySelector('#criar-tarefa');
 const taskList = document.querySelector('#lista-tarefas');
+const cleanTaskList = document.querySelector('#apaga-tudo');
 
+// Funcao que adiciona a classe 'select' aos elementos
 const clickSelect = (e) => {
   const selectListItems = document.querySelectorAll('li');
   for (let item of selectListItems) {
@@ -10,11 +12,11 @@ const clickSelect = (e) => {
   }
 };
 
+// Funcao que marca como 'feito' o item da lista
 const markAsDone = (e) => {
   let targetCheck = e.target.classList;
 
   for (let i = 0; i < targetCheck.length; i += 1) {
-    console.log(targetCheck[i])
     if (targetCheck[i] === 'completed') {
       targetCheck.remove('completed');
       break;
@@ -25,13 +27,22 @@ const markAsDone = (e) => {
   }
 };
 
+// Funcao que adiciona um novo item na lista de tarefas
 const addTask = () => {
   const createTaskItem = document.createElement('LI');
   createTaskItem.innerText = newTaskInput.value;
-  createTaskItem.addEventListener('dblclick', markAsDone)
-  createTaskItem.addEventListener('click', clickSelect)
+  createTaskItem.addEventListener('dblclick', markAsDone);
+  createTaskItem.addEventListener('click', clickSelect);
   taskList.append(createTaskItem);
   newTaskInput.value = '';
 };
 
+const cleanList = () => {
+  const selectListItems = document.querySelectorAll('li');
+  for (let item of selectListItems) {
+    item.remove();
+  }
+};
+
 newTaskButton.addEventListener('click', addTask);
+cleanTaskList.addEventListener('click', cleanList)
