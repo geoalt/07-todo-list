@@ -10,9 +10,25 @@ const clickSelect = (e) => {
   }
 };
 
+const markAsDone = (e) => {
+  let targetCheck = e.target.classList;
+
+  for (let i = 0; i < targetCheck.length; i += 1) {
+    console.log(targetCheck[i])
+    if (targetCheck[i] === 'completed') {
+      targetCheck.remove('completed');
+      break;
+    } else {
+      targetCheck.add('completed');
+      break;
+    }
+  }
+};
+
 const addTask = () => {
   const createTaskItem = document.createElement('LI');
   createTaskItem.innerText = newTaskInput.value;
+  createTaskItem.addEventListener('dblclick', markAsDone)
   createTaskItem.addEventListener('click', clickSelect)
   taskList.append(createTaskItem);
   newTaskInput.value = '';

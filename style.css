@@ -1,4 +1,12 @@
+/* Reset */
+li {
+  cursor: pointer;
+}
+
 .select {
   background-color: rgb(128, 128, 128);
-  color: grey;
+}
+
+.completed {
+  text-decoration: line-through solid black;
 }
