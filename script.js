@@ -2,6 +2,7 @@ const newTaskInput = document.querySelector('#texto-tarefa');
 const newTaskButton = document.querySelector('#criar-tarefa');
 const taskList = document.querySelector('#lista-tarefas');
 const cleanTaskList = document.querySelector('#apaga-tudo');
+const cleanTasksDone = document.querySelector('#remover-finalizados');
 
 // Funcao que adiciona a classe 'select' aos elementos
 const clickSelect = (e) => {
@@ -44,5 +45,13 @@ const cleanList = () => {
   }
 };
 
+const cleanDone = () => {
+  const selectDoneItems = document.querySelectorAll('.completed')
+  for (let item of selectDoneItems) {
+    item.remove();
+  }
+};
+
 newTaskButton.addEventListener('click', addTask);
-cleanTaskList.addEventListener('click', cleanList)
+cleanTaskList.addEventListener('click', cleanList);
+cleanTasksDone.addEventListener('click', cleanDone)
