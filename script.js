@@ -18,18 +18,19 @@ const clickSelect = (e) => {
 // Funcao que retorna a classe 'completed' para salvar o status no localStorage
 const getClass = (itemList) => {
   for (let i = 0; i < itemList.length; i += 1) {
-    if (itemList[i] === 'completed');
-    console.log(itemList[i]);
-    return 'completed';
+    if (itemList[i] === 'completed') {
+      return 'completed';
+    }
   }
   return 'active';
-}
+};
 
 
 // Funcao que marca como 'feito' o item da lista
 const markAsDone = (e) => {
   let targetCheck = e.target.classList;
   targetCheck.toggle('completed');
+  targetCheck.toggle('active');
 };
 
 
@@ -37,6 +38,7 @@ const markAsDone = (e) => {
 const addTask = () => {
   const createTaskItem = document.createElement('LI');
   createTaskItem.innerText = newTaskInput.value;
+  createTaskItem.classList.add('active');
   createTaskItem.addEventListener('dblclick', markAsDone);
   createTaskItem.addEventListener('click', clickSelect);
   taskList.append(createTaskItem);
@@ -61,22 +63,41 @@ const cleanDone = () => {
 
 // Funcao que salva os itens da lista de tarefas no localStorage
 const saveTaskList = () => {
+  storagedListItems = [];
   let itemList;
   let itemStatus;
   const selectListItems = document.querySelectorAll('li');
   for (let item of selectListItems) {
     itemList = item.innerText;
     itemStatus = getClass(item.classList);
-    // colocando o item e seu status na variavel que sera enviado para o localstorage
+    // colocando o item e seu status na variavel que sera enviada para o localstorage
     storagedListItems.push({
       task: itemList,
       status: itemStatus
-    })
+    });
   }
-  console.log(storagedListItems)
-}
 
+  localStorage.setItem('listOfTasks', JSON.stringify(storagedListItems));
+};
 
+// Funcao que recupera tarefas salvas no localStorage
+const restoreSavedTasks = () => {
+  let loadSavedList = JSON.parse(localStorage.getItem('listOfTasks'));
+  if (loadSavedList !== null) {
+    for (let item of loadSavedList) {
+      const createTaskItem = document.createElement('li');
+
+      createTaskItem.innerText = item.task;
+      createTaskItem.classList.add(item.status);
+      createTaskItem.addEventListener('dblclick', markAsDone);
+      createTaskItem.addEventListener('click', clickSelect);
+      taskList.append(createTaskItem);
+    }
+  }
+
+};
+
+// Botoes de acao
 newTaskButton.addEventListener('click', addTask);
 cleanTaskListButton.addEventListener('click', cleanList);
 cleanTasksDoneButton.addEventListener('click', cleanDone);
@@ -84,4 +105,5 @@ saveTasksButton.addEventListener('click', saveTaskList);
 
 
 window.onload = () => {
+  restoreSavedTasks();
 }
