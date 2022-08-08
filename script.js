@@ -29,16 +29,7 @@ const getClass = (itemList) => {
 // Funcao que marca como 'feito' o item da lista
 const markAsDone = (e) => {
   let targetCheck = e.target.classList;
-
-  for (let i = 0; i < targetCheck.length; i += 1) {
-    if (targetCheck[i] === 'completed') {
-      targetCheck.remove('completed');
-      break;
-    } else {
-      targetCheck.add('completed');
-      break;
-    }
-  }
+  targetCheck.toggle('completed');
 };
 
 
